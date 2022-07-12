@@ -4,14 +4,17 @@ services:
     container_name: api-container
     build:
       context: ./app
+    depends_on:
+      - db
     ports:
-      - 5000:5000
+      - 5001:5000
     tty: true
     environment:
       POSTGRES_URL: postgresql://postgres:postgres@host.docker.internal:5434/dev
+      ENV: local
 
   db:
-    container_name: db-container
+    container_name: postgres-container
     build:
       context: ./postgresql
       dockerfile: Dockerfile

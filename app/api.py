@@ -2,27 +2,25 @@ import uuid
 
 from flask import Flask, request, jsonify
 
-from app import database
-from app.database import Fruit
+import config
+import database
+from database import Fruit
 
 app = Flask(__name__)
 
 
-@app.route('/hello', methods=['GET', 'POST'])
-def hello():
+@app.route('/fruits', methods=['GET', 'POST'])
+def fruit_api():
 
-    def get_hello(data):
-        name = data['name']
+    def get_fruits():
         fruits = database.find_fruits()
-        print(fruits)
-        fruits = list(filter(lambda f: f.name == name, fruits))
         res = {
             'result': 'OK',
-            fruits: fruits
+            'fruits': fruits
         }
         return res
 
-    def post_hello(data):
+    def post_fruit(data):
         name = data['name']
         fruit_type = data['type']
         fruit_id = str(uuid.uuid4())
@@ -36,10 +34,12 @@ def hello():
         return res
 
     if request.method == 'GET':
-        return jsonify(get_hello(request.args.to_dict()))
+        return jsonify(get_fruits())
     else:
-        return jsonify(post_hello(request.json))
+        return jsonify(post_fruit(request.json))
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    conf = config.AppConf().get_conf()  #
+    app.run(host=conf['server']['host'], port=conf['server']['port'],
+            debug=True)

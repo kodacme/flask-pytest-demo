@@ -3,7 +3,7 @@ services:
   app:
     container_name: api-container
     build:
-      context: ./app
+      context: ./webapp
     depends_on:
       - db
     ports:

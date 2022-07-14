@@ -12,7 +12,8 @@ class AppConf:
             cls.__instance = super().__new__(cls)
 
             env = os.getenv('ENV')
-            filename = 'config/{}.yaml'
+            dirname = os.path.dirname(os.path.abspath(__file__))
+            filename = dirname + '/config/{}.yaml'
             with open(filename.format(env), 'r') as f:
                 conf = yaml.safe_load(f)
                 cls.__conf = conf

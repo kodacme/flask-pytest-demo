@@ -2,9 +2,9 @@ import uuid
 
 from flask import Flask, request, jsonify
 
-import config
-import database
-from database import Fruit
+from main import config
+from main import database
+from main.database import Fruit
 
 app = Flask(__name__)
 
@@ -40,6 +40,6 @@ def fruit_api():
 
 
 if __name__ == "__main__":
-    conf = config.AppConf().get_conf()  #
+    conf = config.AppConf().get_conf()
     app.run(host=conf['server']['host'], port=conf['server']['port'],
             debug=True)

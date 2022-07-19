@@ -30,4 +30,4 @@ class TestApi:
         body = result.get_json()
 
         assert 'OK' == body['result']
-        assert [{'id': 'FID001'}] == body['fruits']
+        assert ret == body['fruits']
